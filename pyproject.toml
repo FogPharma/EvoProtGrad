@@ -1,0 +1,41 @@
+[project]
+name = "evo_prot_grad"
+version = "0.2.1"
+description = "Parabilis fork for directed evolution of proteins with fast gradient-based discrete MCMC."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pandas>=2.3.3",
+    "transformers[torch]==4.38.0",
+]
+keywords = ["protein engineering", "directed evolution", "huggingface", "protein language models", "mcmc"]
+authors = [
+    {name = "Dakota Hawkins", email = "dhawkins@parabilismed.com"},
+    {name = "Patrick Emami", email = "Patrick.Emami@nrel.gov"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+license = {text = "BSD 3-Clause"}
+
+[project.urls]
+Homepage = "https://github.nrel.gov/FogPharma/EvoProtGrad/"
+
+[build-system]
+requires = ['uv_build>=0.8.3, <0.9.0']
+build-backend = "uv_build"
+[[tool.uv.index]]
+name = 'internal'
+url = "http://dsweb.fog-inter.com/pypi/simple"
+publish-url = "http://dsweb.fog-inter.com/pypi/"
+explicit = true
+[tool.uv.build-backend]
+module-name = "evo_prot_grad"
+module-root = ""
+[tool.pytest.ini_options]
+testpaths = ['test']
