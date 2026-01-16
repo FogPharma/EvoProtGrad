@@ -1,0 +1,10 @@
+fail_fast: true
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.2
+    hooks:
+      # linting
+      - id: ruff
+        args: [--fix, "--ignore=F841"] #ignore unsed variables since breaks with pandas query syntax
+      # formatting
+      - id: ruff-format

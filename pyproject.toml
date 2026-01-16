@@ -3,10 +3,11 @@ name = "evo_prot_grad"
 version = "0.2.1"
 description = "Parabilis fork for directed evolution of proteins with fast gradient-based discrete MCMC."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 dependencies = [
     "pandas>=2.3.3",
-    "transformers[torch]==4.38.0",
+    "transformers[torch]>=4.38.0",
+    "pplm>=0.1.5",
 ]
 keywords = ["protein engineering", "directed evolution", "huggingface", "protein language models", "mcmc"]
 authors = [
@@ -34,6 +35,8 @@ name = 'internal'
 url = "http://dsweb.fog-inter.com/pypi/simple"
 publish-url = "http://dsweb.fog-inter.com/pypi/"
 explicit = true
+[tool.uv.sources]
+pplm = {index = 'internal'}
 [tool.uv.build-backend]
 module-name = "evo_prot_grad"
 module-root = ""
