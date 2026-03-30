@@ -1,27 +1,32 @@
 import importlib
 from typing import Optional, Union
+
 import torch.nn as nn
 from transformers import PreTrainedTokenizerBase
-from evo_prot_grad.experts.base_experts import Expert
-from evo_prot_grad.common.tokenizers import ExpertTokenizer
-from evo_prot_grad.common.sampler import DirectedEvolution
 
-def get_expert(expert_name: str,
-               scoring_strategy: str,
-               temperature: float = 1.0,               
-               model: Optional[nn.Module] = None,
-               tokenizer: Optional[Union[ExpertTokenizer, PreTrainedTokenizerBase]] = None,
-               device: str = 'cpu') -> Expert:
+from evo_prot_grad.common.sampler import DirectedEvolution
+from evo_prot_grad.common.tokenizers import ExpertTokenizer
+from evo_prot_grad.experts.base_experts import Expert
+
+
+def get_expert(
+    expert_name: str,
+    scoring_strategy: str,
+    temperature: float = 1.0,
+    model: Optional[nn.Module] = None,
+    tokenizer: Optional[Union[ExpertTokenizer, PreTrainedTokenizerBase]] = None,
+    device: str = "cpu",
+) -> Expert:
     """
     Current supported expert types (to pass to argument `expert_name`):
-    
+
         - `bert`
         - `causallm`
         - `esm`
         - `evcouplings`
         - `onehot_downstream_regression`
 
-    Customize the expert by specifying the model and tokenizer. 
+    Customize the expert by specifying the model and tokenizer.
     For example:
 
     ```python
@@ -35,7 +40,7 @@ def get_expert(expert_name: str,
         scoring_strategy = 'mutant_marginal',
         temperature = 1.0,
         device = 'cuda'
-    )   
+    )
     ```
 
     Args:
@@ -45,7 +50,7 @@ def get_expert(expert_name: str,
         model (Optional[nn.Module], optional): Model to be used for the expert. Defaults to None.
         tokenizer (Optional[Union[ExpertTokenizer, PreTrainedTokenizerBase]], optional): Tokenizer to be used for the expert. Defaults to None.
         device (str, optional): Device to be used for the expert. Defaults to 'cpu'.
-    
+
     Raises:
         ValueError: If the expert name is not found.
 
@@ -53,15 +58,16 @@ def get_expert(expert_name: str,
         expert (Expert): An instance of the expert.
     """
     try:
-        expert_mod = importlib.import_module(f"evo_prot_grad.experts.{expert_name}_expert")
+        expert_mod = importlib.import_module(
+            f"evo_prot_grad.experts.{expert_name}_expert"
+        )
     except:
         raise ValueError(f"Expert {expert_name} not found in evo_prot_grad.experts.")
-            
+
     return expert_mod.build(
-        temperature = temperature,
-        scoring_strategy = scoring_strategy,
-        model = model,
-        tokenizer = tokenizer,
-        device = device,
+        temperature=temperature,
+        scoring_strategy=scoring_strategy,
+        model=model,
+        tokenizer=tokenizer,
+        device=device,
     )
-    
